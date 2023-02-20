@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
     
     agent any 
     
@@ -66,7 +66,7 @@ pipeline{
                 }
         }
 
-        stage('Quality Gate Status'){
+        stage('upload jar to nexus repo'){
                 
                 steps{
                     
