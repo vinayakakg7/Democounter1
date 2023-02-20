@@ -65,6 +65,23 @@ pipeline{
                     }
                 }
         }
+
+        stage('Quality Gate Status'){
+                
+                steps{
+                    
+                    script{
+
+                        def Readpomversion = readMavenPom file: 'pom.xml'
+
+                        def nexusrepo = readMavemPom.version.endsWith("SNAPSHOT") ? "SnapshotrepoURL" : "releaserepoUrl"
+
+
+             }
+          }
+
+        }
+
  
     }
 }
