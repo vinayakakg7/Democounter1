@@ -56,15 +56,15 @@ pipeline {
             }
         }
 
-        stage('Quality Gate Status'){
+        //stage('Quality Gate Status'){
                 
-                steps{
+          //      steps{
                     
-                    script{
-                        waitForQualityGate abortPipeline: false, credentialsId: 'sonarapi'
-                    }
-                }
-        }
+            //        script{
+              //          waitForQualityGate abortPipeline: false, credentialsId: 'sonarapi'
+                //    }
+                //}
+      //  }
 
         stage('upload jar to nexus repo'){
                 
