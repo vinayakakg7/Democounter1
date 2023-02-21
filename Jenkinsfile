@@ -69,7 +69,7 @@ pipeline {
         stage('upload jar to nexus repo'){
                 
                 steps{
-                     
+                   withMaven(maven: 'maven-3.9.0')  {
                     
                     script{
 
@@ -88,7 +88,7 @@ pipeline {
                             repository: '${nexusrepo.repository}', 
                             version: '{pom.version}'
 
-
+                    }
              }
           }
 
