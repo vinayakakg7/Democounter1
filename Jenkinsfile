@@ -89,7 +89,7 @@ pipeline {
                             steps {
                                 script {
                                     deploy adapters: [tomcat9(credentialsId: 'Tomcat_cred', 
-		                            path: 'C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps', 
+		                           // path: '', 
 		                            url: 'http://localhost:8082')], 
 		                            contextPath: '/webapps', 
 		                            onFailure: false, 
