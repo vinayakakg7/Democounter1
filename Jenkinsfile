@@ -53,7 +53,9 @@ pipeline {
         }
         
         stage('Upload JAR to Nexus repository') {
+
             steps {
+
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     def version = pom.version
@@ -71,8 +73,8 @@ pipeline {
                            // nexusUrl: ${'url'},
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
-                            repository: ${repo}, 
-                            version: ${version}
+                            repository: "${env.repo}", 
+                            version: "${env.version}"
 
                     }
              
