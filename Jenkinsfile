@@ -24,15 +24,18 @@ pipeline {
         
         stage('Build and test using Maven') {
             steps {
-                sh 'mvn clean install -DskipTests=true'
+                bat 'mvn clean install -DskipTests=true'
             }
         }
         
         stage('Run SonarQube analysis') {
             steps {
+
+                script{
                 withSonarQubeEnv(credentialsId: 'sonarapi') {
-                    sh 'mvn clean package sonar:sonar'
+                    bat 'mvn clean package sonar:sonar'
                 }
+            }
             }
         }
         
