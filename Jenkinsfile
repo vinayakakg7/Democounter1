@@ -89,7 +89,7 @@ pipeline {
                // }
        stage('Deploy') {
             steps {
-                bat "xcopy /Y /S ${WAR_FILE} ${TOMCAT_HOME}\\webapps\\" // Copy the WAR file to Tomcat's webapps directory
+                bat "xcopy /y /s ${WAR_FILE} ${TOMCAT_HOME}\\webapps\\" // Copy the WAR file to Tomcat's webapps directory
                 bat "net stop Tomcat9" // Stop Tomcat
                 bat "net start Tomcat9" // Start Tomcat
             }
