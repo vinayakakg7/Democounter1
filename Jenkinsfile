@@ -13,8 +13,10 @@ pipeline {
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
-        //NEXUS_USERNAME = credentials('')
-        //NEXUS_PASSWORD = credentials('')
+        TOMCAT_HOME = "C:\Program Files\Apache Software Foundation\Tomcat 9.0" // Path to Tomcat installation
+        JAR_FILE = "Uber.jar" // Name of the JAR file to deploy
+        CONTEXT_PATH = "webapps" // Context path for the application
+        WAR_FILE = "${CONTEXT_PATH}.war" // Name of the WAR file to create
     }
     
     stages {
@@ -85,18 +87,13 @@ pipeline {
                     
                     //}
                // }
-           stage ('Deploy') {
-      steps {
-        script {
-          deploy adapters: [tomcat9(credentialsId: 'withCredentials([usernamePassword(credentialsId: 'Tomcat_cred', passwordVariable: 'Tomcat_PW', usernameVariable: 'Tomcat_UN')]) {', 
-		  //path: 'C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps', 
-		  url: 'http://localhost:8082')], 
-		  contextPath: 'webapps', 
-		  onFailure: false, 
-		  war: '**/*.war' 
+       stage('Deploy') {
+            steps {
+                bat "xcopy /Y /S ${WAR_FILE} ${TOMCAT_HOME}\\webapps\\" // Copy the WAR file to Tomcat's webapps directory
+                bat "net stop Tomcat9" // Stop Tomcat
+                bat "net start Tomcat9" // Start Tomcat
+            }
         }
-      }
-    }
         }
 }
     
