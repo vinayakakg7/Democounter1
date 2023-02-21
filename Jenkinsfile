@@ -15,8 +15,8 @@ pipeline {
         NEXUS_RELEASE_REPO = 'demo_release'
         TOMCAT_HOME = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0" // Path to Tomcat installation
         JAR_FILE = "Uber.jar" // Name of the JAR file to deploy
-        CONTEXT_PATH = "webapps" // Context path for the application
-        WAR_FILE = "${CONTEXT_PATH}.war" // Name of the WAR file to create
+        CONTEXT_PATH = "Uber" // Context path for the application
+        WAR_FILE = "${CONTEXT_PATH}.jar" // Name of the WAR file to create
     }
     
     stages {
