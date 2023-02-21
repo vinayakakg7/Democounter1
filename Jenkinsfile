@@ -8,13 +8,13 @@ pipeline {
     
     environment {
         SONAR_HOST_URL = 'http://localhost:9000'
-        NEXUS_URL = 'http://13.233.111.214:8081'
+        NEXUS_URL = 'http://13.232.22.30:8081'
         GIT_REPO = 'https://github.com/vinayakakg7/DemoCounter.git'
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
-        NEXUS_USERNAME = credentials('admin')
-        NEXUS_PASSWORD = credentials('P@ssw0rdkgv1')
+        //NEXUS_USERNAME = credentials('')
+        //NEXUS_PASSWORD = credentials('')
     }
     
     stages {
@@ -62,14 +62,25 @@ pipeline {
                     def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
                     def url = "${NEXUS_URL}/repository/${repo}/"
 
-                    //withCredentials([string(credentialsId: 'nexus_credentials', variable: 'nexus')]) {
+        
+                    nexusArtifactUploader artifacts: [
+                            [artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']
+                            ], 
+                            credentialsId: 'nexus_cred', 
+                            groupId: 'com.example', 
+                           // nexusUrl: ${'url'},
+                            nexusVersion: 'nexus3', 
+                            protocol: 'http',
+                            repository: ${'repo'}, 
+                            version: ${'version'}
+
+                    }
+             
                     
-                    withCredentials([usernamePassword(credentialsId: 'nexus_cred', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
-                    bat "mvn deploy:deploy-file -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=target/Uber.jar -Durl=${url} -DrepositoryId=nexus -DgeneratePom=false -DpomFile=pom.xml -Drepository.username=${NEXUS_USERNAME} -Drepository.password=${NEXUS_PASSWORD}"
                     }
                 }
             }
         }
-    }
-}
+    
+
 
