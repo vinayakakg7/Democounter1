@@ -14,9 +14,14 @@ pipeline {
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
         TOMCAT_HOME = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0" // Path to Tomcat installation
-        JAR_FILE = "target/*.jar" // Name of the JAR file to deploy
-        CONTEXT_PATH = "" // Context path for the application
-        WAR_FILE = "${CONTEXT_PATH}.jar" // Name of the WAR file to create
+       // JAR_FILE = "target/*.jar" // Name of the JAR file to deploy
+        //CONTEXT_PATH = "" // Context path for the application
+       // WAR_FILE = "${CONTEXT_PATH}.jar" // Name of the WAR file to create
+        //TOMCAT_HOME = 'C:/path/to/tomcat9'
+        WEBAPPS_DIR = "${TOMCAT_HOME}/webapps"
+        JAR_NAME = '*.jar'
+        JAR_SOURCE = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target'
+
     }
     
     stages {
@@ -87,9 +92,17 @@ pipeline {
                     
                     //}
                // }
-       stage('Deploy') {
-            steps {
-                bat 'curl -T target/*.jar http://username:password@localhost:8082/manager/text/deploy?path=/webapps&update=true'
+            stages {
+                stage('Copy jar to Tomcat webapps') {
+                    steps {
+                        bat "copy ${JAR_SOURCE} ${WEBAPPS_DIR}/${JAR_NAME}"
+            }
+        }
+                 stage('Restart Tomcat') {
+                    steps {
+                        bat "${TOMCAT_HOME}/bin/shutdown.bat"
+                        sleep time: 5, unit: 'SECONDS'
+                        bat "${TOMCAT_HOME}/bin/startup.bat"
             }
         }
         }
