@@ -8,7 +8,7 @@ pipeline {
     
     environment {
         SONAR_HOST_URL = 'http://localhost:9000'
-        NEXUS_URL = '13.232.22.30:8081'
+       // NEXUS_URL = '13.232.22.30:8081'
         GIT_REPO = 'https://github.com/vinayakakg7/DemoCounter.git'
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
@@ -64,8 +64,8 @@ pipeline {
                     
                     def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
                     env.repo = repo
-                    def url = "${NEXUS_URL}/repository/${repo}/"
-                    env.url = url
+                   // def url = "${NEXUS_URL}/repository/${repo}/"
+                    //env.url = url
 
         
                     nexusArtifactUploader artifacts: [
@@ -73,7 +73,7 @@ pipeline {
                             ], 
                             credentialsId: 'nexus_cred', 
                             groupId: 'com.example', 
-                            nexusUrl: "${env.url}",
+                            nexusUrl: '13.232.22.30:8081',
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
                             repository: "${env.repo}", 
