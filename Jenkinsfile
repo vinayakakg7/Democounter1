@@ -60,7 +60,7 @@ pipeline {
                     def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
                     def url = "${NEXUS_URL}/repository/${repo}/"
                     
-                    withCredentials([usernamePassword(credentialsId: 'nexus_cred')]) {
+                    withCredentials([(credentialsId: 'nexus_cred')]) {
                         bat "mvn deploy:deploy-file -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=target/Uber.jar -Durl=${url} -DrepositoryId=nexus -DgeneratePom=false -DpomFile=pom.xml"
                     }
                 }
