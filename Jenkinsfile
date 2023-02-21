@@ -77,7 +77,7 @@ pipeline {
 
                        
 
-                        def readpomversion = readMavenPom file: 'pom.xml'
+                        def pom = readMavenPom file: 'pom.xml'
 
                         def nexusrepo = readMavenPom.version.endsWith("SNAPSHOT") ? "demo_snapshot" : "demo_release"
 
@@ -90,7 +90,7 @@ pipeline {
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
                             repository: '${nexusrepo.repository}', 
-                            version: '{readpomversion.version}'
+                            version: '{pom.version}'
 
 
              }
