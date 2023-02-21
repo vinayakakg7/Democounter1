@@ -20,7 +20,7 @@ pipeline {
         //TOMCAT_HOME = 'C:/path/to/tomcat9'
         WEBAPPS_DIR = "${TOMCAT_HOME}/webapps"
         JAR_NAME = '*.jar'
-        JAR_SOURCE = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target'
+        JAR_SOURCE = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\*.jar'
 
     }
     
