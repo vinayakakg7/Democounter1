@@ -19,7 +19,7 @@ pipeline {
        // WAR_FILE = "${CONTEXT_PATH}.jar" // Name of the WAR file to create
         //TOMCAT_HOME = 'C:/path/to/tomcat9'
         WEBAPPS_DIR = "${TOMCAT_HOME}/webapps"
-        JAR_NAME = '*.jar'
+        //JAR_NAME = '*.jar'
         JAR_SOURCE = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\*.jar'
 
     }
@@ -94,7 +94,7 @@ pipeline {
                // }
                 stage('Copy jar to Tomcat webapps') {
                     steps {
-                        bat "copy ${JAR_SOURCE} ${WEBAPPS_DIR}/${JAR_NAME}"
+                        bat "xcopy ${JAR_SOURCE} ${WEBAPPS_DIR}"
             }
         }
                  stage('Restart Tomcat') {
