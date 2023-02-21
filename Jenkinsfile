@@ -85,16 +85,18 @@ pipeline {
                     
                     //}
                // }
-                    stage('Deploy to Tomcat') {
-                         steps {
-                            script {
-				                deploy adapters: [tomcat9(credentialsId: 'Tomcat_cred' {
-                                def server = Tomcat.server 'http://localhost:8082'
-                                server.deploy contextPath: 'webapps', war: 'target/*.jar'
-                }
-            }
+           stage ('Deploy') {
+      steps {
+        script {
+          deploy adapters: [tomcat9(credentialsId: 'withCredentials([usernamePassword(credentialsId: 'Tomcat_cred', passwordVariable: 'Tomcat_PW', usernameVariable: 'Tomcat_UN')]) {', 
+		  //path: 'C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps', 
+		  url: 'http://localhost:8082')], 
+		  contextPath: 'webapps', 
+		  onFailure: false, 
+		  war: '**/*.war' 
         }
-            }
+      }
+    }
         }
 }
     
