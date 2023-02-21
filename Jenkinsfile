@@ -59,9 +59,11 @@ pipeline {
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     def version = pom.version
+                    env.version = version
                     def snapshot = version.endsWith('-SNAPSHOT')
                     
                     def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
+                    env.repo = repo
                     def url = "${NEXUS_URL}/repository/${repo}/"
 
         
