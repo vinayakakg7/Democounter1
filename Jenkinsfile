@@ -65,6 +65,7 @@ pipeline {
                     def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
                     env.repo = repo
                     def url = "${NEXUS_URL}/repository/${repo}/"
+                    env.url = url
 
         
                     nexusArtifactUploader artifacts: [
@@ -72,7 +73,7 @@ pipeline {
                             ], 
                             credentialsId: 'nexus_cred', 
                             groupId: 'com.example', 
-                           // nexusUrl: ${'url'},
+                           nexusUrl: "${env.url}",
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
                             repository: "${env.repo}", 
