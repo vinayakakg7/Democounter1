@@ -52,40 +52,52 @@ pipeline {
             }
         }
         
-        stage('Upload JAR to Nexus repository') {
+      //  stage('Upload JAR to Nexus repository') {
 
-            steps {
+        //    steps {
 
-                script {
-                    def pom = readMavenPom file: 'pom.xml'
-                    def version = pom.version
-                    env.version = version
-                    def snapshot = version.endsWith('-SNAPSHOT')
+          //      script {
+            //        def pom = readMavenPom file: 'pom.xml'
+              //      def version = pom.version
+                //    env.version = version
+                  //  def snapshot = version.endsWith('-SNAPSHOT')
                     
-                    def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
-                    env.repo = repo
-                   // def url = "${NEXUS_URL}/repository/${repo}/"
-                    //env.url = url
-                    def groupId = pom.groupId
-                    env.groupId = groupId
+                    //def repo = snapshot ? NEXUS_SNAPSHOT_REPO : NEXUS_RELEASE_REPO
+                   // env.repo = repo
+                  
+                    //def groupId = pom.groupId
+                   // env.groupId = groupId
 
         
-                    nexusArtifactUploader artifacts: [
-                            [artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']
-                            ], 
-                            credentialsId: 'nexus_cred', 
-                            groupId: "${env.groupId}", 
-                            nexusUrl: '13.232.22.30:8081',
-                            nexusVersion: 'nexus3', 
-                            protocol: 'http',
-                            repository: "${env.repo}", 
-                            version: "${env.version}"
+                   // nexusArtifactUploader artifacts: [
+                     //       [artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']
+                       //     ], 
+                         //   credentialsId: 'nexus_cred', 
+                           // groupId: "${env.groupId}", 
+                            //nexusUrl: '13.232.22.30:8081',
+                            //nexusVersion: 'nexus3', 
+                            //protocol: 'http',
+                            //repository: "${env.repo}", 
+                           // version: "${env.version}"
 
-                    }
+                    //}
              
                     
-                    }
-                }
+                    //}
+               // }
+                        stage ('Deploy') {
+                            steps {
+                                script {
+                                    deploy adapters: [tomcat9(credentialsId: 'Tomcat_cred', 
+		                            path: 'C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps', 
+		                            url: 'http://localhost:8082')], 
+		                            contextPath: '/webapps', 
+		                            onFailure: false, 
+		                            jar: '**/*.jar' 
+        }
+      }
+    }
+
             }
         }
     
