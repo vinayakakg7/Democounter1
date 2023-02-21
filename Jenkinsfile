@@ -72,6 +72,8 @@ pipeline {
                     
                     script{
 
+                        withMaven(maven: 'maven-3.9.0')
+                        
                         def readpomversion = readMavenPom file: 'pom.xml'
 
                         def nexusrepo = readMavenPom.version.endsWith("SNAPSHOT") ? "demo_snapshot" : "demo_release"
