@@ -13,8 +13,8 @@ pipeline {
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
-        NEXUS_USERNAME = credentials('nexus-username')
-        NEXUS_PASSWORD = credentials('nexus-password')
+        NEXUS_USERNAME = credentials('nexus_cred')
+        NEXUS_PASSWORD = credentials('nexus_cred')
     }
     
     stages {
