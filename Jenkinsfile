@@ -92,7 +92,6 @@ pipeline {
                     
                     //}
                // }
-            stage {
                 stage('Copy jar to Tomcat webapps') {
                     steps {
                         bat "copy ${JAR_SOURCE} ${WEBAPPS_DIR}/${JAR_NAME}"
@@ -107,7 +106,7 @@ pipeline {
         }
         }
 }
-}
+
     
 
 
