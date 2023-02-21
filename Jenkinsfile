@@ -66,13 +66,15 @@ pipeline {
                     env.repo = repo
                    // def url = "${NEXUS_URL}/repository/${repo}/"
                     //env.url = url
+                    def groupId = pom.groupId
+                    env.groupId = groupId
 
         
                     nexusArtifactUploader artifacts: [
                             [artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']
                             ], 
                             credentialsId: 'nexus_cred', 
-                            groupId: 'com.example', 
+                            groupId: "${env.groupId}", 
                             nexusUrl: '13.232.22.30:8081',
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
