@@ -15,7 +15,7 @@ pipeline {
         NEXUS_RELEASE_REPO = 'demo_release'
         TOMCAT_HOME = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0" // Path to Tomcat installation
         JAR_FILE = "target/*.jar" // Name of the JAR file to deploy
-        CONTEXT_PATH = "target/*.jar" // Context path for the application
+        CONTEXT_PATH = "" // Context path for the application
         WAR_FILE = "${CONTEXT_PATH}.jar" // Name of the WAR file to create
     }
     
@@ -89,9 +89,7 @@ pipeline {
                // }
        stage('Deploy') {
             steps {
-                bat "xcopy ${WAR_FILE} ${TOMCAT_HOME}\\webapps\\ /y /s" // Copy the WAR file to Tomcat's webapps directory
-                bat "net stop Tomcat9" // Stop Tomcat
-                bat "net start Tomcat9" // Start Tomcat
+                bat 'curl -T target/*.jar http://username:password@localhost:8082/manager/text/deploy?path=/webapps&update=true'
             }
         }
         }
