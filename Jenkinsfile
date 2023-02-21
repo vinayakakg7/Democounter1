@@ -73,7 +73,7 @@ pipeline {
                             ], 
                             credentialsId: 'nexus_cred', 
                             groupId: 'com.example', 
-                           nexusUrl: "${env.url}",
+                            nexusUrl: "${env.url}",
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
                             repository: "${env.repo}", 
