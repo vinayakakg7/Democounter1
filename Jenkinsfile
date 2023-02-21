@@ -8,7 +8,7 @@ pipeline {
     
     environment {
         SONAR_HOST_URL = 'http://localhost:9000'
-        NEXUS_URL = 'http://13.232.22.30:8081'
+        NEXUS_URL = '13.232.22.30:8081'
         GIT_REPO = 'https://github.com/vinayakakg7/DemoCounter.git'
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
@@ -71,8 +71,8 @@ pipeline {
                            // nexusUrl: ${'url'},
                             nexusVersion: 'nexus3', 
                             protocol: 'http',
-                            repository: ${'repo'}, 
-                            version: ${'version'}
+                            repository: ${repo}, 
+                            version: ${version}
 
                     }
              
