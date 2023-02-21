@@ -13,8 +13,8 @@ pipeline {
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
-        //NEXUS_USERNAME = credentials('nexus-username')
-       // NEXUS_PASSWORD = credentials('nexus-password')
+        NEXUS_USERNAME = credentials('nexus-username')
+        NEXUS_PASSWORD = credentials('nexus-password')
     }
     
     stages {
@@ -64,8 +64,8 @@ pipeline {
 
                     withCredentials([string(credentialsId: 'nexus_credentials', variable: 'nexus')]) {
                     
-                    //withCredentials([usernamePassword(credentialsId: 'nexus_cred', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
-                    bat "mvn deploy:deploy-file -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=target/Uber.jar -Durl=${url} -DrepositoryId=nexus -DgeneratePom=false -DpomFile=pom.xml"
+                    withCredentials([usernamePassword(credentialsId: 'nexus_cred', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
+                    bat "mvn deploy:deploy-file -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=target/Uber.jar -Durl=${url} -DrepositoryId=nexus -DgeneratePom=false -DpomFile=pom.xml -Drepository.username=${NEXUS_USERNAME} -Drepository.password=${NEXUS_PASSWORD}"
                     }
                 }
             }
