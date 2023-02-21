@@ -91,9 +91,9 @@ pipeline {
                                     deploy adapters: [tomcat9(credentialsId: 'Tomcat_cred', 
 		                           // path: '', 
 		                            url: 'http://localhost:8082')], 
-		                            contextPath: '/webapps', 
+		                            contextPath: 'webapps', 
 		                            onFailure: false, 
-		                            jar: '**/*.jar' 
+		                            jar: 'target/*.jar' 
         }
       }
     }
