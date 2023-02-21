@@ -65,7 +65,7 @@ pipeline {
                     //withCredentials([string(credentialsId: 'nexus_credentials', variable: 'nexus')]) {
                     
                     withCredentials([usernamePassword(credentialsId: 'nexus_cred', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
-                    sh "mvn deploy:deploy-file -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=target/Uber.jar -Durl=${url} -DrepositoryId=nexus -DgeneratePom=false -DpomFile=pom.xml -Drepository.username=${NEXUS_USERNAME} -Drepository.password=${NEXUS_PASSWORD}"
+                    bat "mvn deploy:deploy-file -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${version} -Dpackaging=jar -Dfile=target/Uber.jar -Durl=${url} -DrepositoryId=nexus -DgeneratePom=false -DpomFile=pom.xml -Drepository.username=${NEXUS_USERNAME} -Drepository.password=${NEXUS_PASSWORD}"
                     }
                 }
             }
