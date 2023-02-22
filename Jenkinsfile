@@ -1,7 +1,6 @@
+@Grab(group='org.apache.tomcat.maven', module='tomcat-maven-plugin', version='3.2')
 pipeline {
     agent any
-
-    import org.apache.tomcat.maven.runner.Tomcat;
 
     tools {
         maven 'maven'
