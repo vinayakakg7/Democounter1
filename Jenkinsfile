@@ -97,7 +97,7 @@ pipeline {
         //sshagent(['Tomcat_User']) {
           //sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.235.75.30 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
          // }
-            bat "scp 'C:\\\\ProgramData\\\\Jenkins\\\\.jenkins\\\\workspace\\\\DemoApp\\\\target\\\\Uber.Jar' 'C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0\\\\webapps\\\\'"
+            bat "scp 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\Uber.Jar' 'C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\'"
 
          
       }
