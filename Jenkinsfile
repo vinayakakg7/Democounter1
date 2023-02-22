@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    
+
+    import org.apache.tomcat.maven.runner.Tomcat;
+
     tools {
         maven 'maven'
         jdk 'Java'
