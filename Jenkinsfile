@@ -15,7 +15,7 @@ pipeline {
         GIT_BRANCH = 'main'
       //  NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
       //  NEXUS_RELEASE_REPO = 'demo_release'
-        TOMCAT_URL = "http://65.1.110.64:8084"
+        TOMCAT_URL = "http://13.235.75.30:8084"
         //TOMCAT_USER = "admin"
         //TOMCAT_PASSWORD = "P@ssw0rdkgv1"
         //WAR_FILE = "**/*.jar"
@@ -93,7 +93,7 @@ pipeline {
      stage('Deploy') {
       steps {
         sshagent(['Tomcat_User']) {
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.1.110.64 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
+          sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.235.75.30 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
           }
          }
         }
