@@ -92,8 +92,9 @@ pipeline {
       steps {
         script {
           def tomcat = tomcat.container(url: "${env.TOMCAT_URL}", credentialsId: 'tomcatcred', timeout: 60)
-          def file = new file("${env.WORKSPACE}/${env.WAR_FILE}")
-          tomcat.deploy war: file, contextPath: "/webapps", warName: "${env.WAR_FILE}"
+          def file = new File("${env.WORKSPACE}/${env.WAR_FILE}")
+          env.file = file
+          tomcat.deploy war: "${file}", contextPath: "/webapps", warName: "${env.WAR_FILE}"
         }
       }
     }
