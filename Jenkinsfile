@@ -13,14 +13,14 @@ pipeline {
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
-        TOMCAT_HOME = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0" // Path to Tomcat installation
+        //TOMCAT_HOME = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0" // Path to Tomcat installation
        // JAR_FILE = "target/*.jar" // Name of the JAR file to deploy
         //CONTEXT_PATH = "" // Context path for the application
        // WAR_FILE = "${CONTEXT_PATH}.jar" // Name of the WAR file to create
         //TOMCAT_HOME = 'C:/path/to/tomcat9'
-        WEBAPPS_DIR = "${TOMCAT_HOME}/webapps"
+       // WEBAPPS_DIR = "${TOMCAT_HOME}/webapps"
         //JAR_NAME = '*.jar'
-        JAR_SOURCE = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\*.jar'
+       // JAR_SOURCE = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\*.jar'
 
     }
     
@@ -92,20 +92,39 @@ pipeline {
                     
                     //}
                // }
-                stage('Copy jar to Tomcat webapps') {
-                    steps {
-                        bat "xcopy ${JAR_SOURCE} ${WEBAPPS_DIR}"
+                 stage('Upload to Tomcat') {
+      steps {
+        script {
+          def tomcatUrl = 'http://localhost:8082/manager/text/deploy?path=/myapp'
+          def tomcatUsername = 'admin'
+          def tomcatPassword = 'P@ssw0rdkgv1'
+          def filePath = "${env.WORKSPACE}/**/*.jar"
+          def file = new File(filePath)
+          
+          def httpBuilder = new groovyx.net.http.HTTPBuilder(tomcatUrl)
+          httpBuilder.auth.basic(tomcatUsername, tomcatPassword)
+          
+          httpBuilder.request(Method.POST) {
+            uri.path = '/manager/text/deploy'
+            requestContentType = ContentType.MULTIPART_FORM_DATA
+            
+            multipart {
+              filePart 'file', '**/*.jar', file.bytes, 'application/octet-stream'
             }
+          }
+          
+          def response = httpBuilder.response
+          if (response.success) {
+            println "File uploaded successfully to Tomcat."
+          } else {
+            println "Error uploading file to Tomcat: ${response.statusLine}"
+          }
         }
-                 stage('Restart Tomcat') {
-                    steps {
-                        bat "${TOMCAT_HOME}/bin/shutdown.bat"
-                        sleep time: 5, unit: 'SECONDS'
-                        bat "${TOMCAT_HOME}/bin/startup.bat"
-            }
-        }
-        }
+      }
+    }
+  }
 }
+
 
     
 
