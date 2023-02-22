@@ -95,7 +95,7 @@ pipeline {
      stage('Deploy') {
       steps {
         sshagent(['Tomcat_User']) {
-        sh 'ssh -o StrictHostKeyChecking=no tomcat@15.206.195.135 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
+        sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.206.195.135 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
           }
          }
         }
