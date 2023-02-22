@@ -3,7 +3,7 @@
 pipeline {
     agent any
 
-    @Grab(group='org.apache.tomcat.maven', module='tomcat-maven-plugin', version='3.2')
+   // @Grab(group='org.apache.tomcat.maven', module='tomcat-maven-plugin', version='3.2')
 
     tools {
         maven 'maven'
@@ -95,10 +95,11 @@ pipeline {
                stage('Deploy to Tomcat') {
       steps {
         script {
-          def Tomcat = Tomcat.container(url: "${env.TOMCAT_URL}", credentialsId: 'tomcatcred', timeout: 60)
+          def tomcat = tomcat.container(url: "${env.TOMCAT_URL}", credentialsId: 'tomcatcred', timeout: 60)
+          env.tomcat = tomcat
           def file = new File("${env.WORKSPACE}/${env.WAR_FILE}")
           env.file = file
-          Tomcat.deploy war: "${file}", contextPath: "/Uber", warName: "${env.WAR_FILE}"
+          tomcat.deploy war: "${file}", contextPath: "/Uber", warName: "${env.WAR_FILE}"
         }
       }
     }
