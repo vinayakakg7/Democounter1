@@ -31,7 +31,7 @@ pipeline {
         
         stage('Build and test using Maven') {
             steps {
-                sh 'mvn clean install -DskipTests=true'
+                bat 'mvn clean install -DskipTests=true'
             }
         }
         
