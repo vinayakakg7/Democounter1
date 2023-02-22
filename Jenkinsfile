@@ -17,7 +17,7 @@ pipeline {
         GIT_BRANCH = 'main'
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
-        TOMCAT_URL = "http://localhost:8082"
+        TOMCAT_URL = "http://13.126.234.177:8084"
         TOMCAT_USER = "admin"
         TOMCAT_PASSWORD = "P@ssw0rdkgv1"
         WAR_FILE = "**/*.jar"
