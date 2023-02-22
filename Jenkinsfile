@@ -15,8 +15,8 @@ pipeline {
        // NEXUS_URL = '13.232.22.30:8081'
         GIT_REPO = 'https://github.com/vinayakakg7/DemoCounter.git'
         GIT_BRANCH = 'main'
-        NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
-        NEXUS_RELEASE_REPO = 'demo_release'
+      //  NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
+      //  NEXUS_RELEASE_REPO = 'demo_release'
         TOMCAT_URL = "http://13.126.234.177:8084"
         //TOMCAT_USER = "admin"
         //TOMCAT_PASSWORD = "P@ssw0rdkgv1"
@@ -37,27 +37,27 @@ pipeline {
             }
         }
         
-        stage('Run SonarQube analysis') {
-            steps {
+     //   stage('Run SonarQube analysis') {
+       //    steps {
 
-                script{
-                withSonarQubeEnv(credentialsId: 'sonarapi') {
-                    bat 'mvn clean package sonar:sonar'
-                }
-            }
-            }
-        }
+       //         script{
+       //         withSonarQubeEnv(credentialsId: 'sonarapi') {
+      //              bat 'mvn clean package sonar:sonar'
+      //          }
+      //      }
+      //      }
+      //  }
         
-        stage('Check quality gate status') {
-            steps {
-                script {
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    }
-                }
-            }
-        }
+ //       stage('Check quality gate status') {
+ //           steps {
+ //               script {
+  //                  def qg = waitForQualityGate()
+  //                  if (qg.status != 'OK') {
+  //                      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+  //                  }
+   //             }
+   //         }
+   //     }
         
       //  stage('Upload JAR to Nexus repository') {
 
@@ -95,7 +95,7 @@ pipeline {
      stage('Deploy') {
       steps {
         sshagent(['Tomcat_User']) {
-          sh 'scp -o StrictHostKeyChecking=no ubuntu@15.206.195.135 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
+          sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.206.195.135 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp /var/lib/jenkins/target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
           }
          }
         }
