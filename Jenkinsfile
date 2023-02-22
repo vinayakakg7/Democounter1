@@ -18,9 +18,9 @@ pipeline {
         NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
         NEXUS_RELEASE_REPO = 'demo_release'
         TOMCAT_URL = "http://13.126.234.177:8084"
-        TOMCAT_USER = "admin"
-        TOMCAT_PASSWORD = "P@ssw0rdkgv1"
-        WAR_FILE = "**/*.jar"
+        //TOMCAT_USER = "admin"
+        //TOMCAT_PASSWORD = "P@ssw0rdkgv1"
+        //WAR_FILE = "**/*.jar"
 
     }
     
@@ -92,19 +92,15 @@ pipeline {
                     
                     //}
                // }
-               stage('Deploy to Tomcat') {
+     stage('Deploy') {
       steps {
-        script {
-          def tomcat = tomcat.container(url: "${env.TOMCAT_URL}", credentialsId: 'tomcatcred', timeout: 60)
-          env.tomcat = tomcat
-          def file = new File("${env.WORKSPACE}/${env.WAR_FILE}")
-          env.file = file
-          tomcat.deploy war: "${file}", contextPath: "/Uber", warName: "${env.WAR_FILE}"
-        }
+        sshagent(['Tomcat_User']) {
+        sh 'ssh -o StrictHostKeyChecking=no tomcat@15.206.195.135 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
       }
     }
-  }
-}
+        }
+      }
+  
 
 
     
