@@ -101,8 +101,8 @@ pipeline {
           def filePath = "${env.WORKSPACE}/**/*.jar"
           def file = new File(filePath)
           
-          def httpBuilder = new groovyx.net.http.HTTPBuilder(tomcatUrl)
-          httpBuilder.auth.basic(tomcatUsername, tomcatPassword)
+          def httpBuilder = new groovyx.net.http.HTTPBuilder("${env.tomcatUrl}")
+          httpBuilder.auth.basic("${env.tomcatUsername}", "${env.tomcatPassword}")
           
           httpBuilder.request(Method.POST) {
             uri.path = '/manager/text/deploy'
