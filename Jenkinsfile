@@ -11,13 +11,13 @@ pipeline {
     }
     
     environment {
-        SONAR_HOST_URL = 'http://localhost:9000'
+        //SONAR_HOST_URL = 'http://localhost:9000'
        // NEXUS_URL = '13.232.22.30:8081'
         GIT_REPO = 'https://github.com/vinayakakg7/DemoCounter.git'
         GIT_BRANCH = 'main'
       //  NEXUS_SNAPSHOT_REPO = 'demo_snapshot'
       //  NEXUS_RELEASE_REPO = 'demo_release'
-        TOMCAT_URL = "http://13.126.234.177:8084"
+        TOMCAT_URL = "http://65.1.110.64:8084"
         //TOMCAT_USER = "admin"
         //TOMCAT_PASSWORD = "P@ssw0rdkgv1"
         //WAR_FILE = "**/*.jar"
@@ -33,7 +33,7 @@ pipeline {
         
         stage('Build and test using Maven') {
             steps {
-                bat 'mvn clean install -DskipTests=true'
+                sh 'mvn clean install -DskipTests=true'
             }
         }
         
@@ -95,7 +95,7 @@ pipeline {
      stage('Deploy') {
       steps {
         sshagent(['Tomcat_User']) {
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@15.206.195.135 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp /var/lib/jenkins/target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
+          sh 'ssh -o StrictHostKeyChecking=no ubuntu@65.1.110.64 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp /var/lib/jenkins/target/*.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
           }
          }
         }
