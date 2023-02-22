@@ -1,5 +1,3 @@
-
-
 pipeline {
     agent any
 
@@ -37,16 +35,16 @@ pipeline {
             }
         }
         
-     //   stage('Run SonarQube analysis') {
-       //    steps {
+        stage('Run SonarQube analysis') {
+          steps {
 
-       //         script{
-       //         withSonarQubeEnv(credentialsId: 'sonarapi') {
-      //              bat 'mvn clean package sonar:sonar'
-      //          }
-      //      }
-      //      }
-      //  }
+             script{
+                withSonarQubeEnv(credentialsId: 'sonarapi') {
+                    bat 'mvn clean package sonar:sonar'
+               }
+           }
+           }
+       }
         
  //       stage('Check quality gate status') {
  //           steps {
