@@ -90,8 +90,8 @@ pipeline {
                     
                     //}
                // }
-     //stage('Deploy') {
-     //       steps {
+     stage('Deploy') {
+           steps {
       //          deploy(
      //               adapters: [
      //                   tomcat9(credentialsId: 'tomcatcred', url: 'http://localhost:8082/manager/text')
@@ -102,15 +102,15 @@ pipeline {
           
 
        
-        //sshagent(['Tomcat_User']) {
-          //sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.235.75.30 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
-         // }
+        sshagent(['Tomcat_User']) {
+          sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.233.120.253 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp "target\\*.jar" "/opt/tomcat/webapps/" && sudo systemctl tomcat start"'
+          }
             
-            stage('Deploy') {
-      steps {
-        bat 'copy "target\\*.jar" "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps"'
-        bat 'curl -u admin:P@ssw0rdkgv1 "http://localhost:8082/manager/text?path=/uber"'
-        bat 'curl -u manager:P@ssw0rdkgv1 "http://localhost:8082/manager/text?path=/uber"'
+ //           stage('Deploy') {
+ //     steps {
+  //      bat 'copy "target\\*.jar" "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps"'
+   //     bat 'curl -u admin:P@ssw0rdkgv1 "http://13.233.120.253:8084/manager/text?path=/uber"'
+   //     bat 'curl -u manager:P@ssw0rdkgv1 "http://13.233.120.253:8084/manager/text?path=/uber"'
 
       }
     }  
