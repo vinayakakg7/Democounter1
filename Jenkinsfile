@@ -109,8 +109,8 @@ pipeline {
             stage('Deploy') {
       steps {
         bat 'copy "target\\*.jar" "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps"'
-        bat 'curl -u admin:P@ssw0rdkgv1 "http://localhost:8082/manager/text/reload?path=/uber"'
-        bat 'curl -u admin:P@ssw0rdkgv1 "http://localhost:8082/manager/text/reload?path=/uber"'
+        bat 'curl -u admin:P@ssw0rdkgv1 "http://localhost:8082/?path=/uber"'
+        bat 'curl -u admin:P@ssw0rdkgv1 "http://localhost:8082/?path=/uber"'
 
       }
     }  
