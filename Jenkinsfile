@@ -97,7 +97,7 @@ pipeline {
                         tomcat9(credentialsId: 'tomcatcred', url: 'http://localhost:8082/manager/text')
                     ],
                     contextPath: 'Uber/',
-                    war: '**/*.jar'
+                    war: '**/*.Jar'
                 )
           
 
