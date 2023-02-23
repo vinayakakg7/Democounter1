@@ -103,7 +103,7 @@ pipeline {
 
        
         sshagent(['Tomcat_User']) {
-          bat 'scp -o StrictHostKeyChecking=no ubuntu@13.233.120.253 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp "target\\*.jar" "/opt/tomcat/webapps/" && sudo systemctl tomcat start"'
+          cmd 'ssh -o StrictHostKeyChecking=no ubuntu@13.233.120.253 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/*.jar && sudo cp "target\\*.jar" "/opt/tomcat/webapps/" && sudo systemctl tomcat start"'
           }
             
  //           stage('Deploy') {
