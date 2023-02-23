@@ -90,15 +90,15 @@ pipeline {
                     
                     //}
                // }
-     stage('Deploy') {
-            steps {
-                deploy(
-                    adapters: [
-                        tomcat9(credentialsId: 'tomcatcred', url: 'http://localhost:8082/manager/text')
-                    ],
-                    contextPath: 'Uber/',
-                    war: '**/*.Jar'
-                )
+     //stage('Deploy') {
+     //       steps {
+      //          deploy(
+     //               adapters: [
+     //                   tomcat9(credentialsId: 'tomcatcred', url: 'http://localhost:8082/manager/text')
+    //              ],
+    //                contextPath: 'Uber/',
+    //                war: '**/*.Jar'
+     //           )
           
 
        
@@ -106,12 +106,16 @@ pipeline {
           //sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.235.75.30 "sudo systemctl tomcat stop && sudo rm -rf /opt/tomcat/webapps/.jar && sudo cp C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\DemoApp\\target\\.jar /opt/tomcat/webapps/ && sudo systemctl tomcat start"'
          // }
             
-
+            stage('Deploy') {
+      steps {
+        bat 'copy target\\*.jar C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps'
+        bat 'curl -u username:password "http://localhost:8082/manager/text/reload?path=/uber"'
+      }
+    }  
          
             }
           }
-    }
-}
+    
       
     
   
