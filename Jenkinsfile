@@ -119,8 +119,8 @@ pipeline {
       steps{
         script{
           bat 'docker image build -f Dockerfile .'
-          bat 'docker image tag  $JOB_NAME:V1.$BUILD_ID vinayakakg7/$JOB_NAME:V1.$BUILD_ID'
-          bat 'docker image tag  $JOB_NAME:V1.$BUILD_ID vinayakakg7/$JOB_NAME:V1.latest'
+          bat 'docker  tag  $JOB_NAME-V1.$BUILD_ID vinayakakg7/$JOB_NAME-V1.$BUILD_ID'
+          bat 'docker tag  $JOB_NAME-V1.$BUILD_ID vinayakakg7/$JOB_NAME-V1.latest'
         }
       }
     }
@@ -129,8 +129,8 @@ pipeline {
         script{
           withCredentials([string(credentialsId: 'Docker_Credentials', variable: 'Docker_Cred')]) {
             bat 'docker login -u vinayakakg7 -p ${Docker_Cred}'
-             bat 'docker image push vinayakakg7/$JOB_NAME:V1.$BUILD_ID'
-              bat 'docker image push vinayakakg7/$JOB_NAME:latest'
+             bat 'docker image push vinayakakg7/$JOB_NAME-V1.$BUILD_ID'
+              bat 'docker image push vinayakakg7/$JOB_NAME-latest'
 
     
 }
