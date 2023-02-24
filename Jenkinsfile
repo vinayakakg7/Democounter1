@@ -118,7 +118,7 @@ pipeline {
     stage('Docker image build'){
       steps{
         script{
-          bat 'docker image build -f . -t $JOB_NAME:V1.$BUILD_ID'
+          bat 'docker image build -f .'
           bat 'docker image tag  $JOB_NAME:V1.$BUILD_ID vinayakakg7/$JOB_NAME:V1.$BUILD_ID'
           bat 'docker image tag  $JOB_NAME:V1.$BUILD_ID vinayakakg7/$JOB_NAME:V1.latest'
         }
